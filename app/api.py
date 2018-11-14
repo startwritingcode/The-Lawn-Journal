@@ -21,7 +21,6 @@ class LawnList(Resource):
     def post(self):
         print('Creating a new lawn')
 
-api.add_resource(HelloWorld, '/')
 api.add_resource(LawnList, '/lawns')
 api.add_resource(Lawn, '/lawns/<lawn_id>')
 
