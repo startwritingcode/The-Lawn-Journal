@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Resource, Api
 
-from resources.lawn import LawnApi
-from resources.lawnlist import LawnListApi
+from app.resources.lawn import LawnApi
+from app.resources.lawnlist import LawnListApi
 
 app = Flask(__name__)
 api = Api(app)

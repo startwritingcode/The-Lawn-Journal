@@ -1,5 +1,5 @@
-from models.lawn import Lawn
-from models.address import Address
+from app.models.lawn import Lawn
+from app.models.address import Address
 
 ADDRESSES = [
     Address('123 Main St.', '', 'Chicago', 'IL', '12345', 'USA'),

@@ -1,10 +1,10 @@
 import json
 from flask import jsonify, request
 from flask_restful import Resource
-from utilities.lawnbuilder import buildLawn
+from app.utilities.lawnbuilder import buildLawn
 
 # Only imported for sample data
-from resources.testdata import LAWNS
+from app.resources.testdata import LAWNS
 
 class LawnApi(Resource):
     def get(self, lawn_id):

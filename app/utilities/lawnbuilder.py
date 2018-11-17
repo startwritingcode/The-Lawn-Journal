@@ -1,5 +1,5 @@
-from models.lawn import Lawn
-from models.address import Address
+from app.models.lawn import Lawn
+from app.models.address import Address
 
 def buildLawn(lawn_dict):
     lawn_name = lawn_measure = address1 = address2 = city = state = zip = country = ''
