@@ -5,7 +5,7 @@ class LawnList extends Component {
   render() {
     return (
       <div>
-        <h1>Lawn List</h1>
+        <h2>Lawn List</h2>
         <ul>
             <li>Home Lawn</li>
             <li>Parents Lawn</li>

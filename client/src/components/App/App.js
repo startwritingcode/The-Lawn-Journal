@@ -6,9 +6,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <header>
-          <p>Welcome to The Lawn Journal</p>
-        </header>
+        <h1>Welcome to the Lawn Journal</h1>
 
         <LawnList />
       </div>
