@@ -12,7 +12,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 mongo = PyMongo(app)
 
-api.add_resource(LawnListApi, '/api/lawns')
+api.add_resource(LawnListApi, '/api/lawns', resource_class_kwargs={'mongo_client': mongo})
 api.add_resource(LawnApi, '/api/lawns/<lawn_id>')
 
 if __name__ == '__main__':

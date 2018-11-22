@@ -1,12 +1,20 @@
 import json
 from flask import jsonify, request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from app.utilities.lawnbuilder import buildLawn
+from app.models.lawn import Lawn
+from app.models.address import Address
 
 # Only imported for sample data
 from app.resources.testdata import LAWNS
 
+parser = reqparse.RequestParser()
+parser.add_argument('name', required=True, help="Name field is required")
+
 class LawnListApi(Resource):
+    def __init__(self, **kwargs):
+        self.mongoClient = kwargs['mongo_client']
+
     def get(self):
         print('Getting all lawns')
 
@@ -16,12 +24,14 @@ class LawnListApi(Resource):
 
     def post(self):
         print('Creating a new lawn')
-        lawn_dict = json.loads(request.data)
+        args = parser.parse_args()
+        newLawn = Lawn(args['name'])
 
-        lawn = buildLawn(lawn_dict)
-        LAWNS.append(lawn)
-    
-        response = jsonify(lawn.serialize())
+        lawnJson = newLawn.serialize()
+        newLawnId = self.mongoClient.db.lawns.insert_one(lawnJson).inserted_id
+        newLawn.id = newLawnId
+
+        response = jsonify(newLawn.serialize())
         response.status_code = 201
         return response
     
