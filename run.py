@@ -13,7 +13,7 @@ api = Api(app)
 mongo = PyMongo(app)
 
 api.add_resource(LawnListApi, '/api/lawns', resource_class_kwargs={'mongo_client': mongo})
-api.add_resource(LawnApi, '/api/lawns/<lawn_id>')
+api.add_resource(LawnApi, '/api/lawns/<lawn_id>', resource_class_kwargs={'mongo_client': mongo})
 
 if __name__ == '__main__':
     app.run(debug=True)
