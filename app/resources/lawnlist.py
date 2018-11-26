@@ -5,9 +5,6 @@ from app.utilities.lawnbuilder import buildLawn
 from app.models.lawn import Lawn
 from app.models.address import Address
 
-# Only imported for sample data
-from app.resources.testdata import LAWNS
-
 parser = reqparse.RequestParser()
 parser.add_argument('name', required=True, help="Name field is required")
 
@@ -17,8 +14,10 @@ class LawnListApi(Resource):
 
     def get(self):
         print('Getting all lawns')
+        lawn_documents = self.mongoClient.db.lawns.find()
+        lawns = list(map(lambda x: Lawn.deserialize(x), lawn_documents))
 
-        response = jsonify(lawns=[l.serialize() for l in LAWNS])
+        response = jsonify(lawns=[l.serialize() for l in lawns])
         response.status_code = 200
         return response
 

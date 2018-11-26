@@ -6,3 +6,6 @@ class Address:
         self.state = state
         self.zip = zip
         self.country = country
+    
+    def deserialize(address_dict):
+        return Address(address_dict['address1'], address_dict['address2'], address_dict['city'], address_dict['state'], address_dict['zip'], address_dict['country'])

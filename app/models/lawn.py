@@ -23,3 +23,9 @@ class Lawn:
             'total_area': self.total_area,
             'unit_of_measure': self.unit_of_measurement
         }
+
+    def deserialize(lawn_dict):
+        lawn = Lawn(lawn_dict['name'], Address.deserialize(lawn_dict['address']), lawn_dict['total_area'], lawn_dict['unit_of_measure'])
+        lawn.id = str(lawn_dict['_id'])
+
+        return lawn
