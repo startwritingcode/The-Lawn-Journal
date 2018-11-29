@@ -3,6 +3,7 @@ from flask import jsonify, request
 from flask_restful import Resource
 from app.utilities.lawnbuilder import buildLawn
 from bson.objectid import ObjectId
+from bson.errors import InvalidId
 from app.models.lawn import Lawn
 
 # Only imported for sample data
@@ -14,20 +15,30 @@ class LawnApi(Resource):
 
     def get(self, lawn_id):
         print('Getting lawn with id: %s' % lawn_id)
-        lawn_document = self.mongoClient.db.lawns.find_one({'_id': ObjectId(lawn_id)})
-        if lawn_document is not None:
-            lawn = Lawn.deserialize(lawn_document)
-            response = jsonify(lawn.serialize())
-            response.status_code = 200
-            return response
-        else:
+        try:
+            lawn_document = self.mongoClient.db.lawns.find_one({'_id': ObjectId(lawn_id)})
+            if lawn_document is not None:
+                lawn = Lawn.deserialize(lawn_document)
+                response = jsonify(lawn.serialize())
+                response.status_code = 200
+                return response
+            else:
+                message = {
+                    'status': 404,
+                    'message': 'Lawn %s not found' % lawn_id
+                }
+                response = jsonify(message)
+                response.status_code = 404
+                return response
+        except InvalidId:
             message = {
-                'status': 404,
-                'message': 'Lawn at index %s not found' % index
-            }
+                    'status': 404,
+                    'message': 'Lawn %s not found' % lawn_id
+                }
             response = jsonify(message)
             response.status_code = 404
             return response
+
 
     def put(self, lawn_id):
         print('Update lawn with id: %s' % lawn_id)
